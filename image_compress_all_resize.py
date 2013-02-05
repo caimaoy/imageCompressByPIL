@@ -53,9 +53,16 @@ def isImage(filename):
 	else:
 		return False;
 
+def log(logFile, logInfo):
+	logFile.writelnes(logInfo)
+
+
+
 
 def main():
 	timeStart = time.clock()
+	logFile = open('log.log', 'a')
+	logFile.writelnes('\n')
 	if 2 == len(sys.argv) or 1 == len(sys.argv):
 		if 2 == len(sys.argv):
 			try:
