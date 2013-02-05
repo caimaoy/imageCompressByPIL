@@ -3,6 +3,8 @@ import os
 import sys
 import time
 import Image
+import helper
+
 timeStart = time.clock()
 
 '''
@@ -53,17 +55,14 @@ def isImage(filename):
 	else:
 		return False;
 
-def log(logFile, logInfo):
-	logFile.writelnes(logInfo)
 
 
 
 
 def main():
 	timeStart = time.clock()
-	logFile = open('log.log', 'a')
-	logFile.writelnes('\n')
 	if 2 == len(sys.argv) or 1 == len(sys.argv):
+		logfile = helper.openlogfile()
 		if 2 == len(sys.argv):
 			try:
 				ratio =  float(sys.argv[1])
@@ -90,8 +89,10 @@ def main():
 		for root,dirs,files in os.walk(os.getcwd()):
 			for filename in files:
 				fullPathOfFile = root +'\\' + filename
+				#helper.log(logfile, fullPathOfFile)
 				if isImage(fullPathOfFile):
 					compress(fullPathOfFile,ratio)
+					helper.log(logfile, helper.timeNow() + fullPathOfFile)
 					print fullPathOfFile
 				numCompleted += 1
 				per = float(100) * numCompleted / numFile 
