@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 #codeing = utf-8
 import os 
 import sys

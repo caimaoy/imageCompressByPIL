@@ -1,3 +1,4 @@
+#!/usr/bin/env python2.7
 #codeing = utf-8
 import os
 import sys
@@ -5,7 +6,6 @@ import time
 import Image
 import helper
 
-timeStart = time.clock()
 
 def fileCountIn(dir):
     return sum([len(files) for root,dirs,files in os.walk(dir)])
@@ -18,7 +18,7 @@ def compress(fullPathOfFile, ratio = 1.0):
 		#print '%s can not open'% filename
 		#info = filename + ' can no open'
 		print e
-		return	e
+		return '[file]'.ljust(6) + ':' + e
 	wide, hight = im.size
 	wide *= ratio
 	hight *= ratio
@@ -28,8 +28,7 @@ def compress(fullPathOfFile, ratio = 1.0):
 	except Exception, e:
 		print e
 		#info = filename + ' can no save'
-		print e
-		return e
+		return '[file]'.ljust(6) + ':' + e
 
 	info = '[file]'.ljust(6) + ':' + fullPathOfFile  + '\nwide:' + str(int(wide)) + ', hight:' + str(int(hight)) + '\n'
 	return info
@@ -44,6 +43,22 @@ def isImage(filename):
 def main():
 	timeStart = time.clock()
 	if 2 == len(sys.argv) or 1 == len(sys.argv):
+		bInput = raw_input("!"* 80 +
+							"!Warning:\n"
+							"!This executable program will compress ALL JPEG files\n" 
+							"!in your current dir and replace the original files!!!\n" +
+							'!'*80 +
+							"continue? \n"
+							 "y? or n?\n")
+		if (bInput.lower().strip() == 'y' or 
+			bInput.lower().strip() == 'yes'):
+			print 'yes'
+		else:
+			print 'More to read README or -h --help'
+			os.system('pause')
+			return
+
+		timeStart = time.clock()
 		logfile = helper.openlogfile()
 		if 2 == len(sys.argv):
 			try:
