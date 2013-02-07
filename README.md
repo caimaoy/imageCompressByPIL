@@ -14,6 +14,14 @@ you can download from the link above
 >But where to the Python?  
 **You know it**  
 
+###v1.02 
+>Add Warning!!!  
+>Ignore some files and dirs
+>Decompress exe,  
+>you can cope all files in this dir(exe) to the dir that you want to execute it 
+>and do it! 
+
+###v1.0 
 with log like below:  
 >================================================================================
 > Executed at [2013 Feb 07 11:01:45 Thu]
