@@ -7,57 +7,37 @@ import helper
 
 timeStart = time.clock()
 
-'''
-def listyoudir(level, path):  
-    for i in os.listdir(path):  
-        print '  '*(level+1) + i  
-        if os.path.isdir(path + '\\' + i):  
-            listyoudir(level+1, path + '\\' + i)  
-          
-
-rootpath = os.path.abspath('.')  
-print rootpath  
-listyoudir(0, rootpath) 
-'''
-
-'''
-numFile = 0
-def listdir(path):
-	global numFile
-	for filename in os.listdir(path):
-		numFile +=1
-
-
-'''
-
 def fileCountIn(dir):
     return sum([len(files) for root,dirs,files in os.walk(dir)])
 
-def compress(filename, ratio = 1.0):
+def compress(fullPathOfFile, ratio = 1.0):
+	dirname, filename = os.path.split(fullPathOfFile)
 	try:
-		im = Image.open(filename)
+		im = Image.open(fullPathOfFile)
 	except Exception, e:
-		print '%s can not open'% filename
-		return 
+		#print '%s can not open'% filename
+		info = filename + ' can no open'
+		return	info 
 	wide, hight = im.size
 	wide *= ratio
 	hight *= ratio
 	out = im.resize((int(wide),int(hight)))
 	try:
-		out.save(filename)
+		out.save(fullPathOfFile)
 	except Exception, e:
 		print e
-		return
+		info = filename + ' can no open'
+		print info
+		return info
 
+	info = '[file]'.ljust(6) + ':' + fullPathOfFile  + '\nwide:' + str(int(wide)) + ', hight:' + str(int(hight)) + '\n'
+	return info
+	
 def isImage(filename):
 	if filename[-4:] == '.jpg' or filename[-5:] == '.jpeg' or filename[-4:] =='.bmp':
 		return True;
 	else:
 		return False;
-
-
-
-
 
 def main():
 	timeStart = time.clock()
@@ -86,23 +66,32 @@ def main():
 
 		numCompleted = 0
 		numFile = fileCountIn(os.getcwd())
+		bPrintedDir = False
 		for root,dirs,files in os.walk(os.getcwd()):
+			bPrintedDir = False
 			for filename in files:
 				fullPathOfFile = root +'\\' + filename
 				#helper.log(logfile, fullPathOfFile)
 				if isImage(fullPathOfFile):
-					compress(fullPathOfFile,ratio)
-					helper.log(logfile, helper.timeNow() + fullPathOfFile)
-					print fullPathOfFile
+					if False == bPrintedDir:
+						info = '-'* 80 + '\n' +'[dir]'.ljust(6) +":"+  root + '\n' + helper.timeNow() + '\n'
+						helper.log(logfile, info)
+						bPrintedDir = True
+					info = compress(fullPathOfFile,ratio)
+					print info
+					helper.log(logfile, info)
+					#print fullPathOfFile
 				numCompleted += 1
 				per = float(100) * numCompleted / numFile 
 				print 'complete files: %d / %d, %.2f%%' %(numCompleted, numFile, per)
+		logfile.close()
 
 	else:
 		print error
 
 	timeEnd = time.clock()
 	print '[Finished in %.1fs]' %(timeEnd - timeStart)
+
 	raw_input()
 
 if __name__ == '__main__':
