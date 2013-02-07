@@ -16,8 +16,9 @@ def compress(fullPathOfFile, ratio = 1.0):
 		im = Image.open(fullPathOfFile)
 	except Exception, e:
 		#print '%s can not open'% filename
-		info = filename + ' can no open'
-		return	info 
+		#info = filename + ' can no open'
+		print e
+		return	e
 	wide, hight = im.size
 	wide *= ratio
 	hight *= ratio
@@ -26,15 +27,16 @@ def compress(fullPathOfFile, ratio = 1.0):
 		out.save(fullPathOfFile)
 	except Exception, e:
 		print e
-		info = filename + ' can no open'
-		print info
-		return info
+		#info = filename + ' can no save'
+		print e
+		return e
 
 	info = '[file]'.ljust(6) + ':' + fullPathOfFile  + '\nwide:' + str(int(wide)) + ', hight:' + str(int(hight)) + '\n'
 	return info
 	
 def isImage(filename):
-	if filename[-4:] == '.jpg' or filename[-5:] == '.jpeg' or filename[-4:] =='.bmp':
+	filename = filename.lower()
+	if filename[-4:] == '.jpg' or filename[-5:] == '.jpeg': #or filename[-4:] =='.bmp':
 		return True;
 	else:
 		return False;
@@ -84,21 +86,26 @@ def main():
 				numCompleted += 1
 				per = float(100) * numCompleted / numFile 
 				print 'complete files: %d / %d, %.2f%%' %(numCompleted, numFile, per)
+		timeEnd = time.clock()
+		info = '[Finished in %.1fs]\n' %(timeEnd - timeStart)
+		helper.log(logfile, info)
+		print info
 		logfile.close()
+
 
 	else:
 		print error
 
 	timeEnd = time.clock()
-	print '[Finished in %.1fs]' %(timeEnd - timeStart)
 
-	raw_input()
+	'''
+	if raw_input("press any key to continue:"):
+		pass
+	'''
+	#print "press any key to continue:"
+	os.system('pause')
+	#raw_input()
+	#input()
 
 if __name__ == '__main__':
 	main()
-
-#rootPath = os.getcwd()
-
-#print fileCountIn(rootPath)
-
-#compress('a.jpg')
