@@ -44,10 +44,12 @@ def main():
 	timeStart = time.clock()
 	if 2 == len(sys.argv) or 1 == len(sys.argv):
 		bInput = raw_input("!"* 80 +
-							"!Warning:\n"
+							"Warning:".center(79, '_')+ "\n" + 
 							"!This executable program will compress ALL JPEG files\n" 
-							"!in your current dir and replace the original files!!!\n" +
-							'!'*80 +
+							"!in your current dir\n"  + 
+							os.getcwd().center(79,'_') + '\n'
+							"!and REPLACE the original files!!!\n" +  
+							'!'*79 + '\n'
 							"continue? \n"
 							 "y? or n?\n")
 		if (bInput.lower().strip() == 'y' or 
