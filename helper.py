@@ -31,8 +31,20 @@ def log(logFile, logInfo):
 def timeNow():
 	return datetime.datetime.now().strftime('[%Y %b %d %H:%M:%S %a]')
 	#[Sat Jul 07 10:34:39 2012] 
+
+def getdirsize(dir):
+	size = 0L
+	for root, dirs, files in os.walk(dir):
+		size += sum(
+		[os.path.getsize(os.path.join(root, name)) for name in files])
+	return size
+
 def main():
 	print timeNow()
+#	print getdirsize(os.getcwd())
+	cdir = os.getcwd()
+	print cdir
+	print getdirsize(cdir)
 
 
 if __name__ == '__main__':
