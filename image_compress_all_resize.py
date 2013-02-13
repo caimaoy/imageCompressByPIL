@@ -1,5 +1,5 @@
 #!/usr/bin/env python2.7
-#codeing = utf-8
+# -*- coding: utf-8 -*-  
 import os
 import sys
 import time
@@ -109,7 +109,7 @@ def main():
 				per = float(100) * numCompleted / numFile 
 				print 'complete files: %d / %d, %.2f%%' %(numCompleted, numFile, per)
 		currentSize = helper.getdirsize(os.getcwd())
-		compressionRatio = originSize / currentSize
+		compressionRatio = float(originSize) / currentSize
 		info = ('- ' * 39 + '\n' +
 		'Original size is %s'%(helper.byte2MB(originSize)) + 
 		'\n' + 'After compress size is %s'%(helper.byte2MB(currentSize)) +
