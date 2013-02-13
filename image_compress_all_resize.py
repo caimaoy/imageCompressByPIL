@@ -18,7 +18,10 @@ def compress(fullPathOfFile, ratio = 1.0):
 		#print '%s can not open'% filename
 		#info = filename + ' can no open'
 		print e
-		return '[file]'.ljust(6) + ':' + e
+		return  ('[file]'.ljust(6) + ':' + fullPathOfFile + '\n' +
+				'[Exception]: ' + str(e)
+				)
+		#return str(e)
 	wide, hight = im.size
 	wide *= ratio
 	hight *= ratio
@@ -28,7 +31,9 @@ def compress(fullPathOfFile, ratio = 1.0):
 	except Exception, e:
 		print e
 		#info = filename + ' can no save'
-		return '[file]'.ljust(6) + ':' + e
+		return  ('[file]'.ljust(6) + ':' + fullPathOfFile + '\n' +
+				'[Exception]: ' + str(e)
+				)
 
 	info = '[file]'.ljust(6) + ':' + fullPathOfFile  + '\nwide:' + str(int(wide)) + ', hight:' + str(int(hight)) + '\n'
 	return info
@@ -59,7 +64,6 @@ def main():
 			print 'More to read README or -h --help'
 			os.system('pause')
 			return
-
 		timeStart = time.clock()
 		logfile = helper.openlogfile()
 		if 2 == len(sys.argv):
