@@ -39,12 +39,16 @@ def getdirsize(dir):
 		[os.path.getsize(os.path.join(root, name)) for name in files])
 	return size
 
+def byte2MB(byteSize):
+	return '%.3fMB' %(float (byteSize) / 1024 / 1024)
+
 def main():
 	print timeNow()
 #	print getdirsize(os.getcwd())
 	cdir = os.getcwd()
 	print cdir
 	print getdirsize(cdir)
+	print byte2MB(getdirsize(cdir))
 
 
 if __name__ == '__main__':

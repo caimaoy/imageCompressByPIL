@@ -87,6 +87,7 @@ def main():
 		else:
 			ratio = 1.0
 
+		originSize = helper.getdirsize(os.getcwd())
 		numCompleted = 0
 		numFile = fileCountIn(os.getcwd())
 		bPrintedDir = False
@@ -107,6 +108,16 @@ def main():
 				numCompleted += 1
 				per = float(100) * numCompleted / numFile 
 				print 'complete files: %d / %d, %.2f%%' %(numCompleted, numFile, per)
+		currentSize = helper.getdirsize(os.getcwd())
+		compressionRatio = originSize / currentSize
+		info = ('- ' * 39 + '\n' +
+		'Original size is %s'%(helper.byte2MB(originSize)) + 
+		'\n' + 'After compress size is %s'%(helper.byte2MB(currentSize)) +
+		'\n' + 'Compression ratio is %.3f : 1'%(compressionRatio) + '\n' +
+		'- ' * 39 + '\n'
+		)
+		helper.log(logfile, info)
+		print info
 		timeEnd = time.clock()
 		info = '[Finished in %.1fs]\n' %(timeEnd - timeStart)
 		helper.log(logfile, info)
